@@ -1,0 +1,42 @@
+﻿@model IEnumerable<CollegeManagement.ViewModel.CourseViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th> @Html.DisplayNameFor(model => model.TotalStudents)</th>
+        <th> @Html.DisplayNameFor(model => model.TotalTeachers)</th>
+        <th> @Html.DisplayNameFor(model => model.AvgGrade)</th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td><td>
+    @Html.DisplayFor(modelItem => item.TotalStudents)
+</td><td>
+    @Html.DisplayFor(modelItem => item.TotalTeachers)
+</td><td>
+    @Html.DisplayFor(modelItem => item.AvgGrade)
+</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
+        </td>
+    </tr>
+}
+
+</table>
