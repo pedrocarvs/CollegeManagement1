@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
 }
 
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <h2>Index</h2>
 
 <p>
@@ -51,9 +52,9 @@
                 @Html.DisplayFor(modelItem => item.TotalStudents)
             </th>
             <td>
-               <div>
-                   <button id="button" onclick='LoadStudentsGrades(@item.SubjectID)'>see students and grades</button>
-               </div> 
+               
+                   <button class="btn btn-info" id="button" onclick='LoadStudentsGrades(@item.SubjectID)'>see students and grades</button>
+             
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
