@@ -30,12 +30,7 @@ namespace CollegeManagement.Controllers
                                               TeacherName = s.Teacher.Name,
                                               TeacherBirthDate = s.Teacher.BirthDate,
                                               TeacherSalary = s.Teacher.Salary,
-                                              TotalStudents = e1.Select(x => x.StudentID).Count(),
-                                              StudentGrades = (from e in db.Enrollments
-                                                               join s2 in db.Subjects on s.SubjectID equals s2.SubjectID
-                                                               select new StudentViewModel {
-                                                                   StudentName = e.Student.Name,
-                                                                   Grade = e.Grade.Value }).ToList()
+                                              TotalStudents = e1.Select(x => x.StudentID).Count()
                                           }).GroupBy(x => x.SubjectName).Select(x => x.FirstOrDefault()).ToList();
 
 
@@ -152,6 +147,22 @@ namespace CollegeManagement.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+     
+        public PartialViewResult getStudentsGradesBySubjectId(int id) 
+        {
+
+            List<StudentViewModel> svm = (from s in db.Subjects
+                                          join e in db.Enrollments on s.SubjectID equals e.SubjectID 
+                                          join st in db.Students on e.StudentID equals st.ID
+                                          join g in db.Grades on e.Grade.ID equals g.ID
+                                          where s.SubjectID == id
+                                          select new StudentViewModel
+                                          {
+                                            StudentName = st.Name,
+                                            Grade = g.Value
+                                          }).GroupBy(x => x.StudentName).Select(x => x.FirstOrDefault()).ToList();
+            return PartialView("_StudentGrades",svm);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Collections.Generic;
+
 
 namespace CollegeManagement.ViewModel
 {
     public class StudentViewModel
     {
-        [DisplayName("Course Title")]
+        [DisplayName("Student Name")]
         public string StudentName  { get; set; }
 
         [DisplayName("Student Grade")]

@@ -32,32 +32,60 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.SubjectName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TeacherName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TeacherBirthDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TeacherSalary)
-    </td>
-    <th>
-        @Html.DisplayFor(modelItem => item.TotalStudents)
-    </th>
-    <td>
-        @Html.DisplayFor(modelItem => item.StudentGrades)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.SubjectID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherBirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherSalary)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.TotalStudents)
+            </th>
+            <td>
+               <div>
+                   <button id="button" onclick='LoadStudentsGrades(@item.SubjectID)'>see students and grades</button>
+               </div> 
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SubjectID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="dvSubjectStudentsGrades"></div>
+
+<script>
+
+    function LoadStudentsGrades(id)
+    {
+        var selectedId = id;
+        $.ajax({
+            url: '/Subject/getStudentsGradesBySubjectId/',
+            data: { 'id': selectedId },
+            contentType: 'application/json',
+            type: 'GET',
+            dataType: "html",
+            success: function (response) {
+                $('.dvSubjectStudentsGrades').html(response);
+            },
+            error: function (xhr, status) {
+                alert(status);
+            }
+        });
+    }
+   
+</script>
+
